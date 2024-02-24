@@ -1,6 +1,6 @@
 "use strict";
 
-// Some dummy-code to test that the view can be viewed ...
+
 
 window.addEventListener("load", start);
 
@@ -20,14 +20,14 @@ let cannonBall = "🟡";
 // *                               *
 // *********************************
 
-const visualBalls = {
+export const visualBalls = {
   "🔴": "red-ball.png",
   "🔵": "blue-ball.png",
   "🟡": "yellow-ball.png",
   "🟢": "green-ball.png"
 }
 
-function displayEntireChain(model) {
+export function displayEntireChain(model) {
   const visualChain = document.querySelector("#chain");
   // remove everything
   visualChain.innerHTML = "";
@@ -42,14 +42,14 @@ function displayEntireChain(model) {
   }
 }
 
-function displayCannonBall(ball) {
+export function displayCannonBall(ball) {
   const visualCannon = document.querySelector("#cannon");
   visualCannon.innerHTML = "";
   const visualCannonBall = createVisualBall(ball);
   visualCannon.append(visualCannonBall);
 }
 
-function createVisualBall(ball) {
+export function createVisualBall(ball) {
   const visualBall = document.createElement("div");
   visualBall.classList.add("ball");
   const image = document.createElement("img");
@@ -58,13 +58,13 @@ function createVisualBall(ball) {
   return visualBall;
 }
 
-function createButton() {
+export function createButton() {
   const button = document.createElement("button");
   button.textContent = "↑";
   return button;
 }
 
-function addButtonTo(visualBall) {
+export function addButtonTo(visualBall) {
   const button = createButton();
   visualBall.append(button);
   // handle click
@@ -80,7 +80,7 @@ function addButtonTo(visualBall) {
   });
 }
 
-function insertNewBallAfter( index, newBall ) {
+export function insertNewBallAfter( index, newBall ) {
   // find the ball at this index (and the button right after)
   const lastVisualBall = document.querySelectorAll("#chain .ball")[index];
   const newVisualBall = createVisualBall(newBall);
@@ -94,7 +94,7 @@ function insertNewBallAfter( index, newBall ) {
   return newVisualBall;
 } 
 
-function removeVisualBall( visualBall ) {
+export function removeVisualBall( visualBall ) {
   visualBall.remove();
 }
 // Animations
@@ -102,7 +102,7 @@ function removeVisualBall( visualBall ) {
 /**
  * Use simple animation to expand the space already occupied by a visualball 
  */
-function animateExpandSpaceForBall( visualBall ) {
+export function animateExpandSpaceForBall( visualBall ) {
   visualBall.classList.add("expand");
   visualBall.addEventListener("animationend", doneExpanding);
 
@@ -115,7 +115,7 @@ function animateExpandSpaceForBall( visualBall ) {
 /**
  * Use FLIP animation to animate a ball from the position of the canonball
  */
-function animateFromCanonBallToFinalPosition( visualBall ) {
+export function animateFromCanonBallToFinalPosition( visualBall ) {
   // First: Find the starting position of the ball - which is where the cannonball is
   const source = document.querySelector("#cannon .ball img").getBoundingClientRect();
 
@@ -149,7 +149,7 @@ function animateFromCanonBallToFinalPosition( visualBall ) {
 }
 
 
-function animateBallToDisappear( visualBall ) {
+export function animateBallToDisappear( visualBall ) {
   visualBall.classList.add("implode");
   visualBall.addEventListener("animationend", doneDisappearing);
 
