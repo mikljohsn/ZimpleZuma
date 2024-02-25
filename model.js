@@ -66,22 +66,6 @@ export default class Model{
     return newNode;
 }
 
-  
-  /* insertBeforeNode( data, existingNode ) {
-    const newNode = { data: data, next: existingNode, prev: existingNode.prev};
-    // TODO: Doesn't handle if this is the first node
-    if (existingNode.prev == null){
-      this.head = newNode;
-      newNode.prev = null;
-      existingNode.prev = newNode;
-    } else {
-    existingNode.prev.next = newNode;
-    existingNode.prev = newNode;
-    }
-  
-    return newNode;
-  } */
-
   insertAfterNode( data, existingNode ) {
     const newNode = { data: data, next: existingNode.next, prev: existingNode};
     // TODO: Doesn't handle if this is the last node
@@ -96,7 +80,6 @@ export default class Model{
   
     return newNode;
   }
-
   removeNode( existingNode ) {
     const prev = existingNode.prev;
     const next = existingNode.next;
@@ -121,7 +104,6 @@ export default class Model{
     if(existingNode.next)
       existingNode.next.prev = existingNode.prev;
   }
-
   findMatchesAround(node){
     let matches = [];
     matches.push(node);
