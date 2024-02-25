@@ -30,23 +30,39 @@ export default class Controller{
         this.getCannonBall();
     }
 
-    insertOneBall(index){
-        let ball = this.model.get(index);
-        this.model.insertAfterNode(this.cannonBall, ball)
-        this.model.dump();
-        let inBall = this.view.createVisualBall(this.cannonBall)
-        console.log(inBall)
-        console.log(this.view.insertNewBallAfter(index, inBall))
-        this.view.animateExpandSpaceForBall(inBall);
-
+    insertOneBall(index) {
+        // Assuming the index is where you want to insert the new ball AFTER
+        // so if you have [A, B, C] and you insert at index 1, new ball D would be [A, B, D, C]
+        let targetNode = this.model.get(index); // Get the node currently at the index
+        if (targetNode) {
+            // If there's a node at the index, insert the new ball after this node
+            this.model.insertAfterNode(this.cannonBall, targetNode);
+        } else {
+            // If no node is found at the index, it's likely an attempt to insert at the end or an error
+            if (index === 0 || this.model.head === null) {
+                // If the list is empty or inserting at the start, handle accordingly
+                this.model.add(this.cannonBall); // Adjust based on your list's logic, might need to prepend
+            } else {
+                console.error("Invalid index for insertion:", index);
+            }
+        }
+    
+        // Refresh the view to reflect the updated model state
+        this.displayBalls(this.model);
+        // Prepare the next ball for the cannon
+        this.getCannonBall();
+        this.findMatches(index)
     }
-    findMatches(){
-        let thisBall = this.model.get(this.ballIndex);
-        let matches = this.model.findAllMatches(thisBall);
-        this.model.dump();
-        this.view.animateMatchedBalls(matches);
-        this.model.removeMatches(matches);
-        this.model.dump();
+    
+    
+    findMatches(index){
+        let matches = this.model.findMatchesAround(index);
+        if (matches.length > 0){
+            console.log("Matches found:", matches);
+            this.removeMatches(matches);
+        } else {
+            console.log("No matches found");
+        }
     }
 
     createBalls(){

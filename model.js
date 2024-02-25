@@ -46,8 +46,28 @@ export default class Model{
     }
     return node;
   }
+
+  insertBeforeNode(data, existingNode) {
+    const newNode = { data: data, next: existingNode, prev: null };
+    if (existingNode) {
+        newNode.prev = existingNode.prev;
+        if (existingNode.prev) {
+            existingNode.prev.next = newNode;
+        } else {
+            // This is the first node
+            this.head = newNode;
+        }
+        existingNode.prev = newNode;
+    } else {
+        // If existingNode is null, handle as a special case (e.g., append to end or handle error)
+        console.error("existingNode is null, insertion failed.");
+        // Implement appropriate fallback logic here, such as appending to the end if that's intended
+    }
+    return newNode;
+}
+
   
-  insertBeforeNode( data, existingNode ) {
+  /* insertBeforeNode( data, existingNode ) {
     const newNode = { data: data, next: existingNode, prev: existingNode.prev};
     // TODO: Doesn't handle if this is the first node
     if (existingNode.prev == null){
@@ -60,7 +80,7 @@ export default class Model{
     }
   
     return newNode;
-  }
+  } */
 
   insertAfterNode( data, existingNode ) {
     const newNode = { data: data, next: existingNode.next, prev: existingNode};
